@@ -1,0 +1,36 @@
+name: CT/CD for React App
+
+on:
+  push:
+     branches:
+            -main
+Permissions:
+    contents: write
+
+
+jobs:
+     build_and_deploy:
+          runs-on: ubuntu-latest
+
+
+          steps:
+           - name: Checkout repository
+             uses: actions/checkout@v3
+
+           - name: setup node.js
+             uses: actions/setup-node@v3
+             with:
+                node-version: 20
+
+           - name: instal dependencies     
+             run: npm install
+
+           - name: Build
+             run: npm run build
+
+           - name: Deploy to Github Pages
+             uses: JamesIves/github-pages-deploy-actions@4.1.0
+             with:
+             branch: master
+             folder: build
+
